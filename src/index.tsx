@@ -4,16 +4,23 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import App from "./app/App";
 import reportWebVitals from "./reportWebVitals";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@emotion/react";
+import theme from "./theme";
 // @ts-ignore: allow importing CSS for side effects when no .d.ts is provided
 import "./css/index.css";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <App />
+        <CssBaseline />
+      </ThemeProvider>
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );
 
 // If you want to start measuring performance in your app, pass a function
