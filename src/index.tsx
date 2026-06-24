@@ -6,9 +6,10 @@ import App from "./app/App";
 import reportWebVitals from "./reportWebVitals";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@emotion/react";
-import theme from "./theme";
+
 // @ts-ignore: allow importing CSS for side effects when no .d.ts is provided
 import "./css/index.css";
+import theme from "./app/MaterialTheme";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,7 +18,6 @@ ReactDOM.render(
         <App />
         <CssBaseline />
       </ThemeProvider>
-      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root"),
