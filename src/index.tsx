@@ -6,6 +6,7 @@ import App from "./app/App";
 import reportWebVitals from "./reportWebVitals";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@emotion/react";
+import { BrowserRouter as Router } from "react-router-dom";
 
 // @ts-ignore: allow importing CSS for side effects when no .d.ts is provided
 import "./css/index.css";
@@ -15,7 +16,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <App />
+        <Router>
+          <App />
+        </Router>
         <CssBaseline />
       </ThemeProvider>
     </Provider>
