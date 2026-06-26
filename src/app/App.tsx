@@ -1,35 +1,23 @@
 import React from "react";
-// @ts-ignore: side-effect import of CSS without type declarations
-import "../css/app.css";
-// import { Box, Button, Container, Stack, Typography } from "@mui/material";
 
-import { Link, Route, Switch } from "react-router-dom";
+import "../css/app.css";
+
+import { Link, Route, Switch, useLocation } from "react-router-dom";
 
 import { HomePage } from "./screens/homePage";
 import { ProductsPage } from "./screens/productsPage";
 import { OrdersPage } from "./screens/ordersPage";
 import { UserPage } from "./screens/userPage";
+import { Footer } from "./components/footer";
+import { HomeNavbar } from "./components/headers/HomeNavbar";
+import { OtherNavbar } from "./components/headers/OtherNavbar";
 
 function App() {
+  const location = useLocation();
+  console.log("location:", location);
   return (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">HomePage</Link>
-          </li>
-          <li>
-            <Link to="/products">ProductsPage</Link>
-          </li>
-          <li>
-            <Link to="/orders">OrdersPage</Link>
-          </li>
-          <li>
-            <Link to="/member-page">UserPage</Link>
-          </li>
-        </ul>
-      </nav>
-
+    <>
+      {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
       <Switch>
         <Route path="/products">
           <ProductsPage />
@@ -37,14 +25,15 @@ function App() {
         <Route path="/orders">
           <OrdersPage />
         </Route>
-        <Route path="/member-pages">
+        <Route path="/member-page">
           <UserPage />
         </Route>
         <Route path="/">
           <HomePage />
         </Route>
       </Switch>
-    </div>
+      <Footer />
+    </>
   );
 }
 
