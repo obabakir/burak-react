@@ -26,7 +26,7 @@ export function HomeNavbar() {
             <Box className={"hover-line"}>
               <NavLink to="/products" activeClassName={"underline"}>
                 {" "}
-                Productspage{" "}
+                Products{" "}
               </NavLink>
             </Box>
             {authMember ? (
@@ -45,7 +45,7 @@ export function HomeNavbar() {
             <Box className={"hover-line"}>
               <NavLink to="/help" activeClassName={"underline"}>
                 {" "}
-                HelpPage{" "}
+                Help{" "}
               </NavLink>
             </Box>
             {/*Basket*/}
