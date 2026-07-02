@@ -222,3 +222,23 @@
   text-transform: capitalize;
   color: #e3c08d;
 }
+
+/** ADVERTISEMENT **/
+
+.homepage .ads-restaurant-frame {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  height: 693px;
+  box-shadow: -3px 0px 20px 14px #34343480;
+  transform: perspective(0px);
+}
+
+.homepage .ads-restaurant-frame .ads-video {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  background: #0c0e12;
+  box-shadow: 0px -8px 90px rgb(215 215 255);
+  transform: scale(1.5);
+}
