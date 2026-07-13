@@ -16,6 +16,7 @@ import "../css/navbar.css";
 // @ts-ignore: side-effect import of CSS without type declarations
 import "../css/footer.css";
 import HelpPage from "./screens/helpPage";
+import Test from "./screens/Testing";
 
 function App() {
   const location = useLocation();
@@ -37,7 +38,8 @@ function App() {
           <HelpPage />
         </Route>
         <Route path="/">
-          <HomePage />
+          <Test />
+          {/* <HomePage /> */}
         </Route>
       </Switch>
       <Footer />
