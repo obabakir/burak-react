@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Container } from "@mui/material";
 import Statistics from "./Statistics";
@@ -10,6 +10,13 @@ import Events from "./Events";
 import "../../../css/home.css";
 
 export default function HomePage() {
+  // Selector: Store => Date
+
+  useEffect(() => {
+    // Backend server data request => Date
+    // Slice: Date => Store
+  }, []);
+
   return (
     <div className="homepage">
       <Statistics />
