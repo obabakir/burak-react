@@ -17,3 +17,7 @@ export const retrieveTopUsers = createSelector(
   selectHomePage,
   (HomePage) => HomePage.topUsers,
 );
+// export const retrieveTestGroup = createSelector(
+//   selectHomePage,
+//   (homepage) => homepage.testGroup,
+// );

@@ -1,31 +1,47 @@
 import { Box, Button, Container, Stack } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import Basket from "./Basket";
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useContext,
+  useRef,
+} from "react";
 
 export default function HomeNavbar() {
   const authMember = null;
 
   const [count, setCount] = useState<number>(0);
+  // count ni boshlanish qiymati 0 (1000 desak ham bolaveradi)ga teng // setCount bu huddi uni ishga tushuradigan function yani ozgaruvchi
   const [value, setValue] = useState<boolean>(true);
+  // value = boolean = true // setValue function
 
+  // useEffect === componentDidMount //componentWillUnmount // componentDidUpdate majburiy qismlari
   useEffect(
     () => {
-      console.log("componentDidMount", count);
-      setCount(count + 1);
+      console.log(" +++ componentDidMount", count);
+      setCount(
+        count + 1,
+      ); /** componentDidMoun   va aftamatic birinchi ishga tushganda  1 qiymatni beradi**/
 
       return () => {
-        console.log("componentWillUnmount");
+        console.log("+++ componentWillUnmount");
       };
-    } /** componentDidMoun**/,
-    [value] /** componentDidUpdate**/,
+    } /** componentWillUnmount jarayoni un**/,
+    [value] /** array dependency <--> componentDidUpdate**/,
   );
 
-  /** HANDLERS **/
+  // useEffect () --> bu callback va [] --> errey dependancy dan tashkilntopadi
+  //  useEffect 1 marta ishga tushadi va agar biz uni qayta ishga tushurmoqchi bolsak u holda  [] ni ichiga qiymat berib uni ozgartirishimiz kere ==> va biz buni const value ~ ~ true korinishida. berib va  buttonHandler ichidagi functionni qiymati not true yani << setValue(!value) >> ga tenglading va qachonki biz buttonHandlerni ishga tushursak useEffect ishga tushaveradi va uning ichidagi malumot setCount(count + 1); /** componentDidMoun**/ ishga tushaveradi
+
+  /** HANDLERS ==> codni soddalashtirish un yasadik **/
 
   const buttonHandler = () => {
     setValue(!value);
   };
+  // ===>>> function buttonHandler(){ setValue(!value); //  setCount(count + 100);}
+  //
 
   return (
     <div className="home-navbar">
@@ -100,6 +116,8 @@ export default function HomeNavbar() {
                   variant={"contained"}
                   className={"signup-button"}
                   onClick={buttonHandler}
+                  /* onClick = { () => setCount(count + 1)}*/
+                  /* onClick = {() => buttonHandler()}*/
                 >
                   SIGN UP
                 </Button>

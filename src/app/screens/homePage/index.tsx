@@ -12,13 +12,16 @@ import "../../../css/home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
-import { setPopularDishes } from "./slice";
+import { setPopularDishes /*setTestGroup*/ } from "./slice";
 import { retrievePopularDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
 
 // REDUX SLICE & SELECTOR => Payloadinng definition:
 const actionDispatch = (dispatch: Dispatch) => ({
   setPopularDishes: (data: Product[]) => dispatch(setPopularDishes(data)),
+  /*
+  eshmat: (data: Product[]) => dispatch(setTestGroup(data)),
+  */
 });
 // 1 - setPopularDishes: staring/calling commandasi
 // 2 - setPopularDishes: selector.ts dan kelayapti
@@ -28,13 +31,23 @@ const popularDishesRetriever = createSelector(
   (popularDishes) => ({ popularDishes }),
 );
 
+/* const TestGroupRetriever = createSelector(
+ retrieveTestGroup,
+  (toshmat) => ({ toshmat }),
+); */
+
 export default function HomePage() {
   const { setPopularDishes } = actionDispatch(useDispatch());
   const { popularDishes } = useSelector(popularDishesRetriever);
+
+  /*
+  const { eshmat } = useSelector(TestGroupRetriever);  
+  */
+
   // Selector: Store => Date
 
   useEffect(() => {
-    // Backend server data request => Date
+    // Backend server data request => Date /// DATA FETCH
     const result = [
       {
         _id: "6a363d42842e88178ec145f4",
@@ -91,13 +104,22 @@ export default function HomePage() {
         __v: 0,
       },
     ];
+
+    /*
+    const data: Product[] = [];
+    */
     // Slice: Date => Store
 
+    /* eshmat(data)*/
     // @ts-ignore
     setPopularDishes(result);
   }, []);
 
   console.log("popularDishes => :", popularDishes);
+  /*console.log("toshmat selector", toshmat);*/
+
+  console.log("env ni boglaymiz:", process.env.REACT_APP_API_URL);
+
   return (
     <div className="homepage">
       <Statistics />
