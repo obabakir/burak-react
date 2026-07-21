@@ -1,0 +1,32 @@
+import axios from "axios";
+import { serverApi } from "../../lib/config";
+import { Product, ProductInquiry } from "../../lib/types/product";
+
+export class ProductService {
+  private readonly path: string;
+
+  constructor() {
+    this.path = serverApi;
+  }
+
+  public async getProducts(input: ProductInquiry): Promise<Product[]> {
+    try {
+      let url = `${this.path}/product/all?order=${input.order}&page=${input.page}&limit=${input.limit}`;
+
+      /* ikki holat optionalligi un*/
+      if (input.productCollection)
+        url += `&productCollection=${input.productCollection}`;
+      if (input.search) url += `&search=${input.search}`;
+
+      const result = await axios.get(url);
+      console.log("getProducts => :", result);
+
+      return result.data;
+    } catch (err) {
+      console.log(" Error, getproduct:", err);
+      throw err;
+    }
+  }
+}
+
+export default ProductService;
