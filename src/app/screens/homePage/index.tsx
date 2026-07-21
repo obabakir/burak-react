@@ -7,20 +7,21 @@ import NewDishes from "./NewDishes";
 import Advertisement from "./Advertisement";
 import ActiveUsers from "./ActiveUsers";
 import Events from "./Events";
-import "../../../css/home.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
-import { setPopularDishes /*setTestGroup*/ } from "./slice";
+import { setNewDishes, setPopularDishes /*setTestGroup*/ } from "./slice";
 import { retrievePopularDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { ProductService } from "../../services/ProductService"; // or the correct path to ProductService
 import { ProductCollection } from "../../../lib/enums/product.enum";
+import "../../../css/home.css";
 
 // REDUX SLICE & SELECTOR => Payloadinng definition:
 const actionDispatch = (dispatch: Dispatch) => ({
   setPopularDishes: (data: Product[]) => dispatch(setPopularDishes(data)),
+  setNewDishes: (data: Product[]) => dispatch(setNewDishes(data)),
   /*
   eshmat: (data: Product[]) => dispatch(setTestGroup(data)),
   */
@@ -34,7 +35,7 @@ const actionDispatch = (dispatch: Dispatch) => ({
 ); */
 
 export default function HomePage() {
-  const { setPopularDishes } = actionDispatch(useDispatch());
+  const { setPopularDishes, setNewDishes } = actionDispatch(useDispatch());
 
   /*
   const { eshmat } = useSelector(TestGroupRetriever);  
@@ -53,22 +54,25 @@ export default function HomePage() {
         productCollection: ProductCollection.DISH,
       })
       .then((data) => {
-        // console.log("data passed here:", data);
         setPopularDishes(data);
       })
       .catch((err) => console.log("Error:", err));
-    /*
-    const data: Product[] = [];
-    */
+
+    product
+      .getProducts({
+        page: 1,
+        limit: 4,
+        order: "createdAt",
+        // productCollection: ProductCollection.DISH,
+        // commit qilganimiz un eng ohirgi qoshilgan orderlarni olib beradi
+      })
+      .then((data) => {
+        setNewDishes(data);
+      })
+      .catch((err) => console.log("Error:", err));
+
     // Slice: Date => Store
-
-    /* eshmat(data)*/
-    // @ts-ignore
   }, []);
-
-  /*console.log("toshmat selector", toshmat);*/
-
-  // console.log("env ni boglaymiz:", process.env.REACT_APP_API_URL);
 
   return (
     <div className="homepage">
