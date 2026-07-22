@@ -11,17 +11,21 @@ import Events from "./Events";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
-import { setNewDishes, setPopularDishes /*setTestGroup*/ } from "./slice";
+import { setNewDishes, setPopularDishes, /*setTestGroup*/ 
+setTopUsers} from "./slice";
 import { retrievePopularDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { ProductService } from "../../services/ProductService"; // or the correct path to ProductService
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import "../../../css/home.css";
+import MemberService from "../../services/MemberService";
+import { Member } from "../../../lib/types/member";
 
 // REDUX SLICE & SELECTOR => Payloadinng definition:
 const actionDispatch = (dispatch: Dispatch) => ({
   setPopularDishes: (data: Product[]) => dispatch(setPopularDishes(data)),
   setNewDishes: (data: Product[]) => dispatch(setNewDishes(data)),
+  setTopUsers:( data: Member[]) => dispatch(setTopUsers(data)),
   /*
   eshmat: (data: Product[]) => dispatch(setTestGroup(data)),
   */
@@ -35,7 +39,7 @@ const actionDispatch = (dispatch: Dispatch) => ({
 ); */
 
 export default function HomePage() {
-  const { setPopularDishes, setNewDishes } = actionDispatch(useDispatch());
+  const { setPopularDishes, setNewDishes, setTopUsers } = actionDispatch(useDispatch());
 
   /*
   const { eshmat } = useSelector(TestGroupRetriever);  
@@ -70,6 +74,13 @@ export default function HomePage() {
         setNewDishes(data);
       })
       .catch((err) => console.log("Error:", err));
+
+      const member = new MemberService();
+      member
+      .getTopUsers()
+      .then((data )=> setTopUsers(data))
+      .catch(err  => console.log(err));
+
 
     // Slice: Date => Store
   }, []);
