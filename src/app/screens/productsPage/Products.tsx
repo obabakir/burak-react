@@ -54,7 +54,7 @@ export default function Products() {
       .getProducts(productSearch)
       .then((data) => setProducts(data))
       .catch((err) => {
-        console.error("Failed to load products:", err);
+        console.log("Failed to load products:", err);
       });
   }, [productSearch]);
 
