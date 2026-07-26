@@ -12,10 +12,15 @@ import { CartItem } from "../../../lib/types/search";
 
 interface HomeNavbarrProps {
   cartItems: CartItem[];
+  onAdd: (item: CartItem) => void;
+  onRemove: (item: CartItem) => void;
+  onDelete: (item: CartItem) => void;
+  onDeleteAll: () => void;
 }
+// nega bosh erray ==> chunki biz app.tst da basketimizdagi localstoragedan bor bolgan productlarni render qilish ni ishlatayapmiz va shunga array ichida bir necha poroductlar bolishini taminlaydi
 
 export default function HomeNavbar(props: HomeNavbarrProps) {
-  const { cartItems } = props;
+  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
   const authMember = null;
 
   const [count, setCount] = useState<number>(0);
@@ -95,7 +100,13 @@ export default function HomeNavbar(props: HomeNavbarrProps) {
               </NavLink>
             </Box>
             {/* Basket.txs fileni chaqirdik */}
-            <Basket cartItems={cartItems} />
+            <Basket
+              cartItems={cartItems}
+              onAdd={onAdd}
+              onRemove={onRemove}
+              onDelete={onDelete}
+              onDeleteAll={onDeleteAll}
+            />
             {!authMember ? (
               <Box>
                 <Button variant="contained" className="login-button">

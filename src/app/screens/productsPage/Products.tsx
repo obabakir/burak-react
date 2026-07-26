@@ -272,6 +272,7 @@ export default function Products(props: ProductsProps) {
                         <div className={"product-sale"}>{sizeVolume}</div>
                         <Button
                           className={"shop-btn"}
+                          // ===== ====
                           onClick={(e) => {
                             console.log(
                               "BUTTON PRESSED AND STOPPROPAGATION STARTED",
