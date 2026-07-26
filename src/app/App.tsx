@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Link, Route, Switch, useLocation } from "react-router-dom";
 
@@ -17,16 +17,50 @@ import "../css/navbar.css";
 import "../css/footer.css";
 import HelpPage from "./screens/helpPage";
 import Test from "./screens/Testing";
+import { CartItem } from "../lib/types/search";
 
 function App() {
   const location = useLocation();
-  console.log("location:", location);
+  // console.log("location:", location);
+
+  // ========
+  const cartJson: string | null = localStorage.getItem("cartData");
+  const curretCart = cartJson ? JSON.parse(cartJson) : [];
+  const [cartItems, setCartItems] = useState<CartItem[]>(curretCart);
+  // ozgaruvchi => chaqiruvchi kamanda => boshlangich qiymat
+
+  /** HANDLERS**/
+  const onAdd = (input: CartItem) => {
+    const exist: any = cartItems.find(
+      (item: CartItem) => item._id === input._id,
+    );
+    if (exist) {
+      // bu yangi amal, nomi qilayotgan amalimizga berildi, bor mahsulotni sonini qoshadi
+      const cartUpdate = cartItems.map((item: CartItem) =>
+        item._id === input._id
+          ? { ...exist, quantity: exist.quantity + 1 }
+          : item,
+      );
+      setCartItems(cartUpdate);
+      localStorage.setItem("cartData", JSON.stringify(cartUpdate));
+    } else {
+      // agar bor bolmaganda item bu yerga qaytadi
+      const cartUpdate = [...cartItems, { ...input }];
+      setCartItems(cartUpdate);
+      localStorage.setItem("cartData", JSON.stringify(cartUpdate));
+    }
+  };
+
   return (
     <>
-      {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
+      {location.pathname === "/" ? (
+        <HomeNavbar cartItems={cartItems} />
+      ) : (
+        <OtherNavbar cartItems={cartItems} />
+      )}
       <Switch>
         <Route path="/products">
-          <ProductsPage />
+          <ProductsPage onAdd={onAdd} />
         </Route>
         <Route path="/orders">
           <OrdersPage />

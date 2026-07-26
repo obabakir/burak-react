@@ -1,8 +1,14 @@
 import { Box, Button, Container, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import Basket from "./Basket";
+import { CartItem } from "../../../lib/types/search";
+// === basket un
+interface OtherNavbarProps {
+  cartItems: CartItem[];
+}
 
-export default function OtherNavbar() {
+export default function OtherNavbar(props: OtherNavbarProps) {
+  const { cartItems } = props;
   const authMember = null;
   return (
     <div className="other-navbar">
@@ -47,7 +53,8 @@ export default function OtherNavbar() {
               </NavLink>
             </Box>
             {/* Basket.txs fileni chaqirdik */}
-            <Basket />
+            <Basket cartItems={cartItems} />
+
             {!authMember ? (
               <Box>
                 <Button variant="contained" className="login-button">

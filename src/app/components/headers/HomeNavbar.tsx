@@ -8,8 +8,14 @@ import React, {
   useContext,
   useRef,
 } from "react";
+import { CartItem } from "../../../lib/types/search";
 
-export default function HomeNavbar() {
+interface HomeNavbarrProps {
+  cartItems: CartItem[];
+}
+
+export default function HomeNavbar(props: HomeNavbarrProps) {
+  const { cartItems } = props;
   const authMember = null;
 
   const [count, setCount] = useState<number>(0);
@@ -89,7 +95,7 @@ export default function HomeNavbar() {
               </NavLink>
             </Box>
             {/* Basket.txs fileni chaqirdik */}
-            <Basket />
+            <Basket cartItems={cartItems} />
             {!authMember ? (
               <Box>
                 <Button variant="contained" className="login-button">
