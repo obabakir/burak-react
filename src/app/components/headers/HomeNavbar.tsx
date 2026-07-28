@@ -16,43 +16,23 @@ interface HomeNavbarrProps {
   onRemove: (item: CartItem) => void;
   onDelete: (item: CartItem) => void;
   onDeleteAll: () => void;
+  setSignupOpen: (isOpen: boolean) => void;
+  setLoginOpen: (isOpen: boolean) => void;
 }
 // nega bosh erray ==> chunki biz app.tst da basketimizdagi localstoragedan bor bolgan productlarni render qilish ni ishlatayapmiz va shunga array ichida bir necha poroductlar bolishini taminlaydi
 
 export default function HomeNavbar(props: HomeNavbarrProps) {
-  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
+  const {
+    cartItems,
+    onAdd,
+    onRemove,
+    onDelete,
+    onDeleteAll,
+    setSignupOpen,
+    setLoginOpen,
+  } = props;
+
   const authMember = null;
-
-  const [count, setCount] = useState<number>(0);
-  // count ni boshlanish qiymati 0 (1000 desak ham bolaveradi)ga teng // setCount bu huddi uni ishga tushuradigan function yani ozgaruvchi
-  const [value, setValue] = useState<boolean>(true);
-  // value = boolean = true // setValue function
-
-  // useEffect === componentDidMount //componentWillUnmount // componentDidUpdate majburiy qismlari
-  useEffect(
-    () => {
-      console.log(" +++ componentDidMount", count);
-      setCount(
-        count + 1,
-      ); /** componentDidMoun   va aftamatic birinchi ishga tushganda  1 qiymatni beradi**/
-
-      return () => {
-        console.log("+++ componentWillUnmount");
-      };
-    } /** componentWillUnmount jarayoni un**/,
-    [value] /** array dependency <--> componentDidUpdate**/,
-  );
-
-  // useEffect () --> bu callback va [] --> errey dependancy dan tashkilntopadi
-  //  useEffect 1 marta ishga tushadi va agar biz uni qayta ishga tushurmoqchi bolsak u holda  [] ni ichiga qiymat berib uni ozgartirishimiz kere ==> va biz buni const value ~ ~ true korinishida. berib va  buttonHandler ichidagi functionni qiymati not true yani << setValue(!value) >> ga tenglading va qachonki biz buttonHandlerni ishga tushursak useEffect ishga tushaveradi va uning ichidagi malumot setCount(count + 1); /** componentDidMoun**/ ishga tushaveradi
-
-  /** HANDLERS ==> codni soddalashtirish un yasadik **/
-
-  const buttonHandler = () => {
-    setValue(!value);
-  };
-  // ===>>> function buttonHandler(){ setValue(!value); //  setCount(count + 100);}
-  //
 
   return (
     <div className="home-navbar">
@@ -109,7 +89,11 @@ export default function HomeNavbar(props: HomeNavbarrProps) {
             />
             {!authMember ? (
               <Box>
-                <Button variant="contained" className="login-button">
+                <Button
+                  variant="contained"
+                  className="login-button"
+                  onClick={() => setLoginOpen(true)}
+                >
                   Login
                 </Button>
               </Box>
@@ -126,15 +110,13 @@ export default function HomeNavbar(props: HomeNavbarrProps) {
           <Stack className="detail">
             <Box className="head-main-txt">World's Most Delicious Cousine</Box>
             <Box className="wel-txt">The Choice not just a choice</Box>
-            <Box className="service-txt">{count} hours service</Box>
+            <Box className="service-txt"> 24 hours service</Box>
             <Box className="signup">
               {!authMember ? (
                 <Button
                   variant={"contained"}
                   className={"signup-button"}
-                  onClick={buttonHandler}
-                  /* onClick = { () => setCount(count + 1)}*/
-                  /* onClick = {() => buttonHandler()}*/
+                  onClick={() => setSignupOpen(true)}
                 >
                   SIGN UP
                 </Button>
