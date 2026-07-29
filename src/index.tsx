@@ -11,6 +11,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 // @ts-ignore: allow importing CSS for side effects when no .d.ts is provided
 import "./css/index.css";
 import theme from "./app/MaterialTheme";
+import ContexProvider from "./app/contex/ContexProvider";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -18,12 +19,14 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <App />
-        </Router>
-        <CssBaseline />
-      </ThemeProvider>
+      <ContexProvider>
+        <ThemeProvider theme={theme}>
+          <Router>
+            <App />
+          </Router>
+          <CssBaseline />
+        </ThemeProvider>
+      </ContexProvider>
     </Provider>
   </React.StrictMode>,
 );
