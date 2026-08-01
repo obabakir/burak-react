@@ -45,30 +45,19 @@ export default function OrdersPage() {
 
     // dedux ga yuklash mantigi
 
-    // ====
-
     order
       .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })
-      .then((data) => {
-        console.log("PAUSED ORDERS DATA:", data);
-        console.log("IS ARRAY:", Array.isArray(data));
-        setPausedOrders(data);
-      })
+      .then((data) => setPausedOrders(data))
       .catch((err) => console.log("Error", err));
-    // ===
-    //   order
-    //     .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })
-    //     .then((data) => setPausedOrders(data))
-    //     .catch((err) => console.log("Error", err));
 
-    //   order
-    //     .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })
-    //     .then((data) => setProcessOrders(data))
-    //     .catch((err) => console.log("Error", err));
-    //   order
-    //     .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.FINISH })
-    //     .then((data) => setFinishedOrders(data))
-    //     .catch((err) => console.log("Error", err));
+    order
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })
+      .then((data) => setProcessOrders(data))
+      .catch((err) => console.log("Error", err));
+    order
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.FINISH })
+      .then((data) => setFinishedOrders(data))
+      .catch((err) => console.log("Error", err));
   }, [orderInquiry]);
 
   /** HANDLERS **/
