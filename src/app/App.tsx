@@ -16,17 +16,18 @@ import { CartItem } from "../lib/types/search";
 import useBasket from "./hooks/useBasket";
 import AuthenticationModal from "./components/auth";
 
+import { T } from "../lib/types/common";
+import { sweetErrorHandling, sweetTopSuccessAlert } from "../lib/sweetAlert";
+import { Messages } from "../lib/config";
+import MemberService from "./services/MemberService";
+import { GlobalContex, useGlobals } from "./hooks/useGlabals";
+
 // @ts-ignore: side-effect import of CSS without type declarations
 import "../css/app.css";
 // @ts-ignore: side-effect import of CSS without type declarations
 import "../css/navbar.css";
 // @ts-ignore: side-effect import of CSS without type declarations
 import "../css/footer.css";
-import { T } from "../lib/types/common";
-import { sweetErrorHandling, sweetTopSuccessAlert } from "../lib/sweetAlert";
-import { Messages } from "../lib/config";
-import MemberService from "./services/MemberService";
-import { GlobalContex, useGlobals } from "./hooks/useGlabals";
 function App() {
   const location = useLocation();
   // console.log("location:", location);

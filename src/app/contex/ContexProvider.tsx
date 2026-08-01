@@ -16,10 +16,11 @@
 //       ? JSON.parse(localStorage.getItem("memberData") as string)
 //       : null,
 //   );
+// const [orderBuilder, setOrderBuilder] = useState<Date>(new Date());
 //   console.log("=== verify ===");
 
 //   return (
-//     <GlobalContex.Provider value={{ authMember, setAuthMember }}>
+//     <GlobalContex.Provider value={{ authMember, setAuthMember, orderBuilder, setOrderBuilder }}>
 //       {children}
 //     </GlobalContex.Provider>
 //   );
@@ -38,7 +39,7 @@ const ContexProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       ? JSON.parse(localStorage.getItem("memberData") as string)
       : null,
   );
-
+  const [orderBuilder, setOrderBuilder] = useState<Date>(new Date());
   useEffect(() => {
     const verifyMember = async () => {
       try {
@@ -64,7 +65,9 @@ const ContexProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContex.Provider value={{ authMember, setAuthMember }}>
+    <GlobalContex.Provider
+      value={{ authMember, setAuthMember, orderBuilder, setOrderBuilder }}
+    >
       {children}
     </GlobalContex.Provider>
   );

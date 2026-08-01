@@ -17,6 +17,7 @@ import { setPausedOrders, setProcessOrders, setFinishedOrders } from "./slice";
 import { Order, OrderInquiry } from "../../../lib/types/order";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import OrderService from "../../services/OrderServise";
+import { useGlobals } from "../../hooks/useGlabals";
 
 // REDUX SLICE & SELECTOR => Payloadinng definition:
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -34,6 +35,7 @@ export default function OrdersPage() {
     actionDispatch(useDispatch());
 
   const [value, setValue] = useState("1");
+  const { orderBuilder } = useGlobals();
   const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
     page: 1,
     limit: 5,
@@ -58,7 +60,7 @@ export default function OrdersPage() {
       .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.FINISH })
       .then((data) => setFinishedOrders(data))
       .catch((err) => console.log("Error", err));
-  }, [orderInquiry]);
+  }, [orderInquiry, orderBuilder]);
 
   /** HANDLERS **/
   const handleChange = (e: SyntheticEvent, newValue: string) => {
@@ -85,8 +87,8 @@ export default function OrdersPage() {
               </Box>
             </Box>
             <Stack className={"order-main-content"}>
-              <PausedOrders />
-              <ProcessOrders />
+              <PausedOrders setValue={setValue} />
+              <ProcessOrders setValue={setValue} />
               <FinishedOrders />
             </Stack>
           </TabContext>
