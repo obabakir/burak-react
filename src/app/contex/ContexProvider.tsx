@@ -39,7 +39,9 @@ const ContexProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       ? JSON.parse(localStorage.getItem("memberData") as string)
       : null,
   );
+  // ====
   const [orderBuilder, setOrderBuilder] = useState<Date>(new Date());
+  // ====
   useEffect(() => {
     const verifyMember = async () => {
       try {

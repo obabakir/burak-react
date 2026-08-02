@@ -18,6 +18,9 @@ import { Order, OrderInquiry } from "../../../lib/types/order";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import OrderService from "../../services/OrderServise";
 import { useGlobals } from "../../hooks/useGlabals";
+import { useHistory } from "react-router-dom";
+import { serverApi } from "../../../lib/config";
+import { MemberType } from "../../../lib/enums/member.enum";
 
 // REDUX SLICE & SELECTOR => Payloadinng definition:
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -35,7 +38,31 @@ export default function OrdersPage() {
     actionDispatch(useDispatch());
 
   const [value, setValue] = useState("1");
-  const { orderBuilder } = useGlobals();
+  const { orderBuilder, authMember, setAuthMember } = useGlobals();
+
+  // member info configuration ozimni ijodim
+  const [memberImage, setMemberImage] = useState<string>(
+    authMember?.memberImages
+      ? `${serverApi}/${authMember.memberImages}`
+      : "/icons/default-user.svg",
+  );
+
+  const [memberAddress, setMemberAddress] = useState<string>(
+    authMember?.memberAddress ? authMember.memberAddress : "no address",
+  );
+
+  const [memberDescription, setMemberDescription] = useState<string>(
+    authMember?.memberDesc ? authMember.memberDesc : "no description",
+  );
+  const [memberTypeIcon, setMemberTypeIcon] = useState<string>(
+    authMember?.memberType === MemberType.RESTAURANT
+      ? "/icons/restaurant.svg"
+      : "/icons/user-badge.svg",
+  );
+
+  // member info configuration ozimni ijodim
+  const history = useHistory();
+
   const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
     page: 1,
     limit: 5,
@@ -45,7 +72,7 @@ export default function OrdersPage() {
   useEffect(() => {
     const order = new OrderService();
 
-    // dedux ga yuklash mantigi
+    // redux ga yuklash mantigi
 
     order
       .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })
@@ -67,6 +94,8 @@ export default function OrdersPage() {
     setValue(newValue);
   };
 
+  // orderPagedan => home ga push qilish mantigi, auth bolmaganligi un
+  if (!authMember) history.push("/");
   return (
     <div className={"order-page"}>
       <Container className="order-container">
@@ -98,26 +127,24 @@ export default function OrdersPage() {
           <Box className={"order-info-box"}>
             <Box className={"member-box"}>
               <div className={"order-user-img"}>
-                <img
-                  src={"/icons/default-user.svg"}
-                  className={"order-user-avatar"}
-                />
+                <img src={memberImage} className={"order-user-avatar"} />
                 <div className={"order-user-icon-box"}>
-                  <img
-                    src={"/icons/user-badge.svg"}
-                    className={"order-user-prof-img"}
-                  />
+                  <img src={memberTypeIcon} className={"order-user-prof-img"} />
                 </div>
               </div>
-              <span className={"order-user-name"}>Martin</span>
-              <span className={"order-user-prof"}>User</span>
+              <span className={"order-user-name"}>
+                {authMember?.memberNick}
+              </span>
+              <span className={"order-user-prof"}>
+                {authMember?.memberType}
+              </span>
             </Box>
             <Box className={"liner"}></Box>
             <Box className={"order-user-address"}>
               <div style={{ display: "flex" }}>
                 <LocationOnIcon />
               </div>
-              <div className={"spec-address-txt"}>Do not exist</div>
+              <div className={"spec-address-txt"}>{memberAddress}</div>
             </Box>
           </Box>
           <Box className={"order-info-box"} sx={{ mt: "15px" }}>
